@@ -1,0 +1,166 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x08000000         0x00020000         xr
+SRAM             0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.text           0x08000000      0x1a4
+ *(.vectors*)
+ .vectors       0x08000000       0x18 startup.o
+ *(.text*)
+ .text          0x08000018       0x50 alarm.o
+                0x08000018                Set_Alarm_actuator
+ .text          0x08000068       0x38 algorithm.o
+                0x08000068                Alarm_ON
+                0x08000090                Alarm_OFF
+ .text          0x080000a0       0xa4 driver.o
+                0x080000a0                Delay
+                0x080000c4                GPIO_INITIALIZATION
+ .text          0x08000144       0x40 main.o
+                0x08000144                main
+ .text          0x08000184       0x18 pressure_senseor.o
+                0x08000184                getPressureVal
+ .text          0x0800019c        0x8 startup.o
+
+.rodata         0x080001a4        0x8
+ .rodata        0x080001a4        0x8 algorithm.o
+                0x080001a4                pressure_threshold
+                0x080001a8                delay_time
+
+.glue_7         0x080001ac        0x0
+ .glue_7        0x00000000        0x0 linker stubs
+
+.glue_7t        0x080001ac        0x0
+ .glue_7t       0x00000000        0x0 linker stubs
+
+.vfp11_veneer   0x080001ac        0x0
+ .vfp11_veneer  0x00000000        0x0 linker stubs
+
+.v4_bx          0x080001ac        0x0
+ .v4_bx         0x00000000        0x0 linker stubs
+
+.iplt           0x080001ac        0x0
+ .iplt          0x00000000        0x0 alarm.o
+
+.rel.dyn        0x080001ac        0x0
+ .rel.iplt      0x00000000        0x0 alarm.o
+
+.data           0x20000000        0x0 load address 0x080001ac
+ *(.data)
+ .data          0x20000000        0x0 alarm.o
+ .data          0x20000000        0x0 algorithm.o
+ .data          0x20000000        0x0 driver.o
+ .data          0x20000000        0x0 main.o
+ .data          0x20000000        0x0 pressure_senseor.o
+ .data          0x20000000        0x0 startup.o
+
+.igot.plt       0x20000000        0x0 load address 0x080001ac
+ .igot.plt      0x00000000        0x0 alarm.o
+
+.bss            0x20000000        0x0 load address 0x080001ac
+ *(.bss)
+ .bss           0x20000000        0x0 alarm.o
+ .bss           0x20000000        0x0 algorithm.o
+ .bss           0x20000000        0x0 driver.o
+ .bss           0x20000000        0x0 main.o
+ .bss           0x20000000        0x0 pressure_senseor.o
+ .bss           0x20000000        0x0 startup.o
+LOAD alarm.o
+LOAD algorithm.o
+LOAD driver.o
+LOAD main.o
+LOAD pressure_senseor.o
+LOAD startup.o
+OUTPUT(pressure_senseor.elf elf32-littlearm)
+
+.debug_info     0x00000000      0x3e3
+ .debug_info    0x00000000       0xa8 alarm.o
+ .debug_info    0x000000a8       0xcf algorithm.o
+ .debug_info    0x00000177       0xc3 driver.o
+ .debug_info    0x0000023a       0xc0 main.o
+ .debug_info    0x000002fa       0x9e pressure_senseor.o
+ .debug_info    0x00000398       0x4b startup.o
+
+.debug_abbrev   0x00000000      0x1f5
+ .debug_abbrev  0x00000000       0x5e alarm.o
+ .debug_abbrev  0x0000005e       0x5a algorithm.o
+ .debug_abbrev  0x000000b8       0x76 driver.o
+ .debug_abbrev  0x0000012e       0x64 main.o
+ .debug_abbrev  0x00000192       0x4f pressure_senseor.o
+ .debug_abbrev  0x000001e1       0x14 startup.o
+
+.debug_loc      0x00000000      0x158
+ .debug_loc     0x00000000       0x38 alarm.o
+ .debug_loc     0x00000038       0x58 algorithm.o
+ .debug_loc     0x00000090       0x64 driver.o
+ .debug_loc     0x000000f4       0x38 main.o
+ .debug_loc     0x0000012c       0x2c pressure_senseor.o
+
+.debug_aranges  0x00000000       0xc0
+ .debug_aranges
+                0x00000000       0x20 alarm.o
+ .debug_aranges
+                0x00000020       0x20 algorithm.o
+ .debug_aranges
+                0x00000040       0x20 driver.o
+ .debug_aranges
+                0x00000060       0x20 main.o
+ .debug_aranges
+                0x00000080       0x20 pressure_senseor.o
+ .debug_aranges
+                0x000000a0       0x20 startup.o
+
+.debug_line     0x00000000      0x252
+ .debug_line    0x00000000       0x7f alarm.o
+ .debug_line    0x0000007f       0x40 algorithm.o
+ .debug_line    0x000000bf       0x90 driver.o
+ .debug_line    0x0000014f       0x41 main.o
+ .debug_line    0x00000190       0x87 pressure_senseor.o
+ .debug_line    0x00000217       0x3b startup.o
+
+.debug_str      0x00000000      0x13f
+ .debug_str     0x00000000       0xa2 alarm.o
+                                 0xdb (size before relaxing)
+ .debug_str     0x000000a2       0x3d algorithm.o
+                                 0xf4 (size before relaxing)
+ .debug_str     0x000000df       0x2a driver.o
+                                 0xea (size before relaxing)
+ .debug_str     0x00000109       0x14 main.o
+                                 0xde (size before relaxing)
+ .debug_str     0x0000011d       0x22 pressure_senseor.o
+                                 0xe2 (size before relaxing)
+
+.comment        0x00000000       0x11
+ .comment       0x00000000       0x11 alarm.o
+                                 0x12 (size before relaxing)
+ .comment       0x00000000       0x12 algorithm.o
+ .comment       0x00000000       0x12 driver.o
+ .comment       0x00000000       0x12 main.o
+ .comment       0x00000000       0x12 pressure_senseor.o
+
+.ARM.attributes
+                0x00000000       0x31
+ .ARM.attributes
+                0x00000000       0x33 alarm.o
+ .ARM.attributes
+                0x00000033       0x33 algorithm.o
+ .ARM.attributes
+                0x00000066       0x33 driver.o
+ .ARM.attributes
+                0x00000099       0x33 main.o
+ .ARM.attributes
+                0x000000cc       0x33 pressure_senseor.o
+ .ARM.attributes
+                0x000000ff       0x21 startup.o
+
+.debug_frame    0x00000000      0x110
+ .debug_frame   0x00000000       0x2c alarm.o
+ .debug_frame   0x0000002c       0x48 algorithm.o
+ .debug_frame   0x00000074       0x44 driver.o
+ .debug_frame   0x000000b8       0x30 main.o
+ .debug_frame   0x000000e8       0x28 pressure_senseor.o
